@@ -36,7 +36,13 @@ CREATE TABLE `booking` (
   `occupants` int(11) NOT NULL,
   `room_type_requested` varchar(72) NOT NULL,
   `nights` int(11) NOT NULL,
-  `arrival_time` varchar(72) NOT NULL
+  `arrival_time` varchar(72) NOT NULL,
+  CONSTRAINT occupant_limit
+  CHECK  	
+  (occupants <11),
+  CONSTRAINT amount_limit
+  CHECK  	
+  (((select R.amount from rate R where room_type_requested=R.room_type) * nights )<=2000)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
